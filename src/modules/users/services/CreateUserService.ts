@@ -1,6 +1,7 @@
 import { getCustomRepository } from 'typeorm'
 import User from '../entities/User'
 import UsersRepository from '../repositories/UsersRepository'
+import { hash } from 'bcryptjs'
 
 interface IRequestDTO {
   email: string
@@ -17,7 +18,12 @@ class CreateUserService {
       throw new Error('Usuário já existe no banco')
     }
 
-    const user = await this.usersRepository.createUser({ email, password })
+    const hashedPassword = await hash(password, 8)
+
+    const user = await this.usersRepository.createUser({
+      email,
+      password: hashedPassword
+    })
 
     return user
   }

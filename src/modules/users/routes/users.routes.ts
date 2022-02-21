@@ -1,17 +1,10 @@
-import { instanceToInstance } from 'class-transformer'
 import { Router } from 'express'
-import CreateUserService from '../services/CreateUserService'
+import { UsersController } from '../controllers/UsersController'
+
 
 const usersRouter = Router()
+const usersController = new UsersController()
 
-usersRouter.post('/users', async(request, response) =>{
-  const { email, password } = request.body
-
-  const createUser = new CreateUserService()
-
-  const user = await createUser.execute({ email, password })
-
-  return response.status(201).json(instanceToInstance(user))
-})
+usersRouter.post('/users', usersController.create)
 
 export default usersRouter
