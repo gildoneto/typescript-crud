@@ -2,6 +2,7 @@ import { instanceToInstance } from 'class-transformer'
 import { Request, Response } from 'express'
 import CreateUserService from '../services/CreateUserService'
 import { DeleteUserService } from '../services/DeleteUserService'
+import { ShowUserService } from '../services/ShowUserService'
 
 class UsersController {
 
@@ -29,6 +30,17 @@ class UsersController {
 
     return response.status(200).json({ ok: true })
   }
+
+  async show(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params //users/:id
+
+    const showUser = new ShowUserService()
+
+    const user = await showUser.execute({ user_id: id })
+
+    return response.status(201).json(instanceToInstance(user))
+  }
+
 }
 
 export { UsersController }
