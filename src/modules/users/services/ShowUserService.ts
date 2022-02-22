@@ -12,7 +12,7 @@ class ShowUserService {
 
   public async execute({ user_id }: IRequestDTO): Promise<User> {
     const userExists = await this.usersRepository.findById(user_id)
-
+    // try catch => driverError: error: invalid input syntax for type uuid
     if(!userExists) {
       throw new AppError('Usuário não existe no banco')
     }
