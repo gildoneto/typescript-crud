@@ -4,7 +4,7 @@ import CreateUserService from '../services/CreateUserService'
 
 class UsersController {
 
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body
 
     const createUser = new CreateUserService()
